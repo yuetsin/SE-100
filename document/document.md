@@ -198,4 +198,38 @@ data quite naturally.
    Unfortunately, at least till then, Swift will not provide this as a proterozoic feature.
    
    
-   
+  ## Signals and Slots
+  
+  The signal and slot design reminds me of a famous C++ boost library called 'Qt'.
+  It's widely used in creating cross-platform GUI program.
+  In its event design, all widgets would express a 'signal' when it receives a particular
+  event (from the mouse, keyboard, touchpad, etc.), and this signal would be 'connected' to
+  a slot who will execute the event handler function. Thus, a signal could connect more than one slots,
+  and a particular slot can also be connected with many different signals, even they're coming from different
+  kind of widgets. All of that can be completed in one single line code:
+  ``` c++
+    connect(my_button_a, &QPushButton::clicked, this, &myWidget::my_slot_a);
+    connect(my_button_a, &QPushButton::pressed, this, &myWidget::my_slot_b);
+    connect(my_button_b, &QPushButton::clicked, this, &myWidget::my_slot_a);
+    connect(my_button_b, &QPushButton::pressed, this, &myWidget::my_slot_b);
+  ```
+  
+  Rather than Swift style @IBAction:
+  ``` swift
+    @IBAction func someEventHandler(_ sender: NSButton) {
+        // ...
+    }
+   ```
+  
+  This kind of abstract and regular protocol could ease lots of problem. And in Vue.js, there also exists
+  signals and slots.
+  
+  While in Vue.js, the slot can do something more interesting. For example, it could expand a piece
+  of dynamically loaded HTML, JavaScript, widgets, etc.
+  
+  Declaring slots are also very simple:
+  
+  ```html
+    <slot name="my_slot"></slot>
+  ```
+  And now you can use this signal everywhere!
