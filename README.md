@@ -3,7 +3,12 @@ This project is trying to make a fair comparison with Vue.js and Swift. :)
 
  * /documents/document.md
 
-The main homework markdown file.
+The main homework 1 markdown file.
+
+ * /document_2
+
+Contains the stuff related to homework 2: "The Native and the Web".
+
 
  * /project/*
  
