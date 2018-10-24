@@ -1,4 +1,5 @@
-# vue-project-demo
+# SE-100
+
 This project is trying to make a fair comparison with Vue.js and Swift. :)
 
  * /documents/document.md
