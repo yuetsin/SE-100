@@ -100,7 +100,9 @@ And "CoreBluetooth" could easily calls the bluetooth function of your machine. H
 access your bluetooth hardware and your private calendar information! Now even accessing the camera is a great challenge
 for web developers.
 
-So, if your application has such capacities, there would be little chance for the "Web" based application.
+So, if your application has hardware sensitive capacities, there would be little chance for the "Web" based application.
+On the other hand, you should read the API Documentation your OS developer provides and follow their instructions to
+make sure they works fine. After all, the functionality matters most.
 
 ## Appendix
 
@@ -205,9 +207,6 @@ Node js    62.94    1,858,960    935    133.33    84% 76% 78% 70%
 Swift    28.42    261,568    1366    109.98    96% 96% 96% 99%
 
 C++ g++    3.83    156,104    1624    12.00    72% 73% 98% 72%
-
-
-
 
 
 ## References
