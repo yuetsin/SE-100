@@ -10,7 +10,7 @@ of this passage, I'd like to introduce a new way to "hybrid" the two techniques 
 
 I can still recall a time when the performance of mobile devices are not so well-developed (approximately in 2010s, the beginning
 of Chinese mobile network), some application will boast them as developed in the "Full Native Code". That's not surprising since
-at that time, placing an Internet page in your application will always cause notable stucks. But is that prejudice still correct *today*?  I mean, does the major growing up of mobile devices' processing ability have already changed the situation?
+at that time, placing an Internet page in your application will always cause notable stucks. Even till today, a famous Chinese online shopping app called "Taobao" is still causing extreme stucks in many Android smartphones for its abuse of "WebView" to display its content. But is that prejudice still correct *today*?  I mean, does the major growing up of mobile devices' processing ability have already changed the situation?
 
 Let's take some typical kind of famous programming language used for developing native and web programs.
 For Apple's iOS / macOS platform, the officially confirmed application developing language is Objective-C and Swift.
@@ -54,8 +54,6 @@ and I'm already having a JavaScript-based [web page](http://tool.oschina.net/hex
 why not just directly reuse them in your application?
 
 Imagine we've owned this website and using it won't cause any legal conflicts.
-
-
 
 If we want to rebuild that web page natively, we have to use Objective-C or Swift to rewrite all business logic.
 Re-coding and testing would consume lots of unnecessary working people hours.
@@ -104,9 +102,51 @@ So, if your application has hardware sensitive capacities, there would be little
 On the other hand, you should read the API Documentation your OS developer provides and follow their instructions to
 make sure they works fine. After all, the functionality matters most.
 
+#### Digression
+
+Some major web browser developer has announced an experimental function [Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API). It is hoped to solve the functionality lacking issue. However since the diversity of browsers and its long-time experimental duration, I don't think it will spread very popular in a short time.
+
+
+## Hybrid
+
+Since both native and web has its pros and cons, will combine them altogether be a good idea?
+
+Tencent has announced a new way creating applications after long time complex arguments with Apple Inc., who
+strictly limits the competitors of its official application distributor "App Store". But anyway it came out in early 2017.
+
+### Performance
+
+WeChat Mini Apps are simply a wrapped version of JavaScript, which means its execution performance won't be much different
+from JavaScript above. Considering such application won't be really performance sensitive, it won't be a great point.
+
+### Reuseability
+
+Absolutely OK! All your .js files are reusable with no problem. All you need to do is inserting wxml (a specific version of html)
+and rewrite the GUI part code. Thanks to its similar grammar, you won't come across any major difficulty there.
+
+### Functionality
+
+The most frequently asked question is: How many native APIs can I call? After all, if there's no great benefit, we won't turn
+to such a young platform. And Tencent WeChat Mini App Docs give us accurate answer:
+
+* WeChat Pay API
+
+Maybe that's the most cared about API: the apps that can make consumers pay dollars are good apps. With great many WeChat Pay users, there won't be much difficulty to make your application support IAP (In-Application Purchase) safe and sound.
+
+* Location API
+
+Nothing more to say, it's almost the most basic capability of an application.
+
+* User-Identifier API
+
+There won't be a better choice than one's WeChat ID to identify a specific user. It's almost static at all and exclusive.
+If you want to identify each one of your application's users, that would be a great choice.
+
+So it seems that hybrid application is not a bad idea at least. I'm very looking forward to learning this new technique!
+
 ## Appendix
 
-### JavaScript vs. Swift vs. C++ Result:
+### JavaScript vs. Swift vs. C++ Performance Result:
 
  * n-body
 
@@ -214,3 +254,8 @@ C++ g++    3.83    156,104    1624    12.00    72% 73% 98% 72%
 [The Computer Language Benchmarks Game, Debian](https://benchmarksgame-team.pages.debian.net/benchmarksgame/)
 
 [Hex Convert, OSChina](http://tool.oschina.net/hexconvert/)
+
+[Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API)
+
+[WeChat Mini App Dev Tools](https://developers.weixin.qq.com/miniprogram/dev/devtools/devtools.html)
+
