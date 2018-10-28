@@ -1,6 +1,6 @@
 # SE-100
 
-This project is trying to make a fair comparison with Vue.js and Swift. :)
+This repo contains all homeworks in SE-100. :)
 
  * /documents/document.md
 
@@ -13,4 +13,4 @@ Contains the stuff related to homework 2: "The Native and the Web".
 
  * /project/*
  
- Some demo project file that doesn't make much sense and should be ignored by all means.
+ Some temporary demo project file that doesn't make much sense and should be ignored by all means.
