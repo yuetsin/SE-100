@@ -42,6 +42,8 @@ There we will give out the conclusion:
 So seeing all these stuffs, we can say the judgement on the performance is well-founded.
 In other words, using Native code would really save about 60% ~ 70% time based on the Web code.
 
+Obviously, "Native" wins.
+
 ### Reuseability
 
 Almost all browser script has a unified standard, which could greatly reduces the working load when you have to migrate
@@ -62,7 +64,7 @@ However, if we wants to use the web view trick, everything can be simpler:
 
 First, drag a Web View on your application's interface...
 
-![Screenshot No.1](https://raw.githubusercontent.com/yuxiqian/SE-100/master/document_2/screenshots/ss_1.png)
+![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/document_2/screenshots/ss_1.png)
 
 Second, import some necessary libraries...
 ```Swift
@@ -84,7 +86,11 @@ webView.load(request)
 
 Done! Here's my fresh "web-based application":
 
-![Screenshot No.2](https://raw.githubusercontent.com/yuxiqian/SE-100/master/document_2/screenshots/ss_2.png)
+![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/document_2/screenshots/ss_2.png)
+
+That's how easy it is to reuse existed codes if we use the Web technique. Obviously, "Web" wins this match.
+
+### Functionality
 
 ## Appendix
 
