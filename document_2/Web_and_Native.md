@@ -92,9 +92,19 @@ That's how easy it is to reuse existed codes if we use the Web technique. Obviou
 
 ### Functionality
 
+Apple have build a lot of libraries to strengthen the bond between the OS (Operating System) and the application layer.
+They're usually named with a "Kit" suffix. Some more kernal layer libraries have a "Core" prefix.
+
+For example, "EventKits" can access and modify the system calendar library if this application gets users' permission.
+And "CoreBluetooth" could easily calls the bluetooth function of your machine. How ridiculous it would be if a website could
+access your bluetooth hardware and your private calendar information! Now even accessing the camera is a great challenge
+for web developers.
+
+So, if your application has such capacities, there would be little chance for the "Web" based application.
+
 ## Appendix
 
-### JavaScript vs. C++ Result:
+### JavaScript vs. Swift vs. C++ Result:
 
  * n-body
 
