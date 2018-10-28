@@ -22,23 +22,14 @@ And the first aspect we may need to compare is the performace.
 
 We will take the following three languages at their typical platforms as their testing environment as following:
 
- * Swift
- 
- version 4.2 (swift-4.2-RELEASE)
- 
- Target: x86_64-unknown-linux-gnu
- 
- LLVM version 5.0.1
+ * Swift (version 4.2 (swift-4.2-RELEASE) Target: x86_64-unknown-linux-gnu LLVM version 5.0.1)
 
- * Node js
+ * C++ (g++ (Ubuntu 8.2.0-7ubuntu1) 8.2.0)
  
- v10.7.0
+  * Node js (v10.7.0)
 
- * C++
- 
- g++ (Ubuntu 8.2.0-7ubuntu1) 8.2.0
 
-And the full comparison result is in the apprendix part.
+And the full comparison statistics are placed in the apprendix part.
 
 There we will give out the conclusion:
 
@@ -51,6 +42,16 @@ There we will give out the conclusion:
 So seeing all these stuffs, we can say the judgement on the performance is well-founded.
 In other words, using Native code would really save about 60% ~ 70% time based on the Web code.
 
+### Reuseability
+
+Almost all browser script has a unified standard, which could greatly reduces the working load when you have to migrate
+your business to a new platform.
+
+For example, if I'd like to create an application that could convert numbers from different digits,
+and I'm already having a JavaScript-based [web page](http://tool.oschina.net/hexconvert/) that functions fine,
+why not just directly reuse them in your application?
+
+If we want to rebuild that web page natively, we have to use Objective-C or Swift to rewrite all business logic.
 
 ## Appendix
 
@@ -156,10 +157,6 @@ Swift    28.42    261,568    1366    109.98    96% 96% 96% 99%
 
 C++ g++    3.83    156,104    1624    12.00    72% 73% 98% 72%
 
-Node js
-
-v10.7.0
-
 
 
 
@@ -167,3 +164,5 @@ v10.7.0
 ## References
 
 [The Computer Language Benchmarks Game, Debian](https://benchmarksgame-team.pages.debian.net/benchmarksgame/)
+
+[Hex Convert, OSChina](http://tool.oschina.net/hexconvert/)
