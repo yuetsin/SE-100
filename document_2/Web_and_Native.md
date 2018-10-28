@@ -104,6 +104,10 @@ So, if your application has hardware sensitive capacities, there would be little
 On the other hand, you should read the API Documentation your OS developer provides and follow their instructions to
 make sure they works fine. After all, the functionality matters most.
 
+#### Digression
+
+Some major web browser developer has announced an experimental function [Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API). It is hoped to solve the functionality lacking issue. However since the diversity of browsers and its long-time experimental duration, I don't think it will spread very popular in a short time.
+
 ## Appendix
 
 ### JavaScript vs. Swift vs. C++ Result:
@@ -214,3 +218,5 @@ C++ g++    3.83    156,104    1624    12.00    72% 73% 98% 72%
 [The Computer Language Benchmarks Game, Debian](https://benchmarksgame-team.pages.debian.net/benchmarksgame/)
 
 [Hex Convert, OSChina](http://tool.oschina.net/hexconvert/)
+
+[Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API)
