@@ -51,7 +51,40 @@ For example, if I'd like to create an application that could convert numbers fro
 and I'm already having a JavaScript-based [web page](http://tool.oschina.net/hexconvert/) that functions fine,
 why not just directly reuse them in your application?
 
+Imagine we've owned this website and using it won't cause any legal conflicts.
+
+
+
 If we want to rebuild that web page natively, we have to use Objective-C or Swift to rewrite all business logic.
+Re-coding and testing would consume lots of unnecessary working people hours.
+
+However, if we wants to use the web view trick, everything can be simpler:
+
+First, drag a Web View on your application's interface...
+
+![Screenshot No.1](https://raw.githubusercontent.com/yuxiqian/SE-100/master/document_2/screenshots/ss_1.png)
+
+Second, import some necessary libraries...
+```Swift
+
+import WebKit
+
+```
+
+Third, set the source of the web view...
+
+
+```Swift
+
+let contentHTML: String = "https://tool.oschina.net/hexconvert/"
+let request = URLRequest(url: URL(string: contentHTML)!)
+webView.load(request)
+
+```
+
+Done! Here's my fresh "web-based application":
+
+![Screenshot No.2](https://raw.githubusercontent.com/yuxiqian/SE-100/master/document_2/screenshots/ss_2.png)
 
 ## Appendix
 
