@@ -47,7 +47,11 @@ In other words, using Native code would really save about 60% ~ 70% time based o
 Almost all browser script has a unified standard, which could greatly reduces the working load when you have to migrate
 your business to a new platform.
 
-For example, if I'd like to create an application that could
+For example, if I'd like to create an application that could convert numbers from different digits,
+and I'm already having a JavaScript-based [web page](http://tool.oschina.net/hexconvert/) that functions fine,
+why not just directly reuse them in your application?
+
+If we want to rebuild that web page natively, we have to use Objective-C or Swift to rewrite all business logic.
 
 ## Appendix
 

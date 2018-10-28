@@ -11,6 +11,7 @@
 		8A52A2E62185548C00518663 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52A2E52185548C00518663 /* ViewController.swift */; };
 		8A52A2E82185548C00518663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A52A2E72185548C00518663 /* Assets.xcassets */; };
 		8A52A2EB2185548C00518663 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A52A2E92185548C00518663 /* Main.storyboard */; };
+		8A52A2F52185559800518663 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A52A2F42185559800518663 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		8A52A2EA2185548C00518663 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8A52A2EC2185548C00518663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A52A2ED2185548C00518663 /* CrudeHexConverter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrudeHexConverter.entitlements; sourceTree = "<group>"; };
+		8A52A2F42185559800518663 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A52A2F52185559800518663 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,6 +42,7 @@
 			children = (
 				8A52A2E22185548C00518663 /* CrudeHexConverter */,
 				8A52A2E12185548C00518663 /* Products */,
+				8A52A2F32185559700518663 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +65,14 @@
 				8A52A2ED2185548C00518663 /* CrudeHexConverter.entitlements */,
 			);
 			path = CrudeHexConverter;
+			sourceTree = "<group>";
+		};
+		8A52A2F32185559700518663 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A52A2F42185559800518663 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
