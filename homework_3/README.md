@@ -1,4 +1,4 @@
-# homework_3
+# Homework 3
 
 > Homework Project for SE-100.
 
@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install
+npm install vue-material
 
 # serve with hot reload at localhost:8080
 npm run dev
