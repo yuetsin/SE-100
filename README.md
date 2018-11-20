@@ -2,15 +2,15 @@
 
 This repo contains all homeworks in SE-100. :)
 
- * /documents/document.md
+ * /homework_1/document.md
 
 The main homework 1 markdown file.
 
- * /document_2
+ * /homework_2
 
 Contains the stuff related to homework 2: "The Native and the Web".
 
+* /homework_3
 
- * /project/*
- 
- Some temporary demo project file that doesn't make much sense and should be ignored by all means.
+Contains the stuff related to homework 3.
+
