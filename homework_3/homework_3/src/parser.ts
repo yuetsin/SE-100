@@ -1,5 +1,10 @@
 // parser.ts
 
-export function parse(json: string) {
+export class Parser {
 
+    constructor(json: string) {
+        this.curData = JSON.parse(json);
+    }
+
+    curData: JSON
 }
