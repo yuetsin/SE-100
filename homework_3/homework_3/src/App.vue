@@ -32,7 +32,7 @@
         <md-button class="md-raised md-accent">重置</md-button>
       </md-layout>
       <md-layout>
-        <md-button onclick="startQuery(2018, 1)" class="md-raised md-primary">查询</md-button>
+        <md-button  v-on:click="clickQuery(year, term)" class="md-raised md-primary">查询</md-button>
       </md-layout>
       <md-layout md-flex="30">
       </md-layout>
@@ -108,29 +108,61 @@
       <md-layout md-flex="30"></md-layout>
     </md-layout>
     <md-bottom-bar md-shift>
-      <md-bottom-bar-item @click="$.switchPart('room')" md-icon="room">按教室</md-bottom-bar-item>
-      <md-bottom-bar-item @click="switchPart('teacher')" md-icon="teacher">按教师</md-bottom-bar-item>
-      <md-bottom-bar-item @click="switchPart('name')" md-icon="name" md-active>按课名</md-bottom-bar-item>
+      <md-bottom-bar-item v-on:click="switchPart('room')" md-icon="room">按教室</md-bottom-bar-item>
+      <md-bottom-bar-item v-on:click="switchPart('teacher')" md-icon="teacher">按教师</md-bottom-bar-item>
+      <md-bottom-bar-item v-on:click="switchPart('name')" md-icon="name" md-active>按课名</md-bottom-bar-item>
     </md-bottom-bar>
   </div>
 </template>
 
-<script src="../node_modules/vue-material/dist/vue-material.js"></script>
-<script lang='ts' src="main.ts"></script>
 <script lang="ts">
-  /* eslint-disable */
-import Vue from 'vue'
-// eslint-disable-next-line
-import Component from 'vue-class-component'
-@Component({
-  name: 'app'
-})
-export default class App extends Vue {
-  
-}
-let VueMaterial = require('vue-material')
-Vue.use(VueMaterial)
+    /* eslint-disable */
+    import './main'
+    import {parse} from "./parser";
+    import Vue from 'vue'
+    import jquery from 'jquery'
+
+    export default Vue.extend({
+        data: function() {
+            return {
+                'year': '',
+                'term': '',
+                'building': '',
+                'room': ''
+            }
+        },
+        methods: {
+            clickQuery(year: string, term: string): void {
+                function startQuery(start_year: string, term: string) {
+                    let term_id = 0;
+                    switch (term) {
+                        case 'autumn':
+                            term_id = 1;
+                            break;
+                        case 'spring':
+                            term_id = 2;
+                            break;
+                        case 'summer':
+                            term_id = 3;
+                            break;
+                    }
+                    let json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/master/json_output/"
+                    let json_url = json_link_header + start_year + "_" + (eval(start_year) + 1) + "_" + term_id + ".json";
+                    jquery.get(json_url, function(result: string){
+                        alert(result)
+                    });
+                }
+                startQuery(year, term);
+            },
+            switchPart(part: string): void {
+                // alert("called switchpart");
+                parse("233");
+            }
+        }
+    })
+
 </script>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

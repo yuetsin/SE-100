@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install vue-material
+npm install vue-material ts-loader
 
 # serve with hot reload at localhost:8080
 npm run dev
