@@ -84,7 +84,7 @@ class Curriculum {
     identifier = '';
     // 课程唯一识别代码
 
-    earn_hour = 0;
+    learn_hour = 0;
     // 学时
 
     credit_score = 0.0;
