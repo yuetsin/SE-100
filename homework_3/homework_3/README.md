@@ -10,13 +10,13 @@ All data come from [yuxiqian/finda-studyroom](https://github.com/yuxiqian/finda-
 
 ![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/main.png)
 
-Main Page
+> Main Page
 
 ![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/result.png)
 
-Result Page
+> Result Page
 
-![GitHub Mirror](https://yuxiqian.github.io/index.html)
+[GitHub Mirror](https://yuxiqian.github.io/index.html)
 
 ## Build Setup
 
