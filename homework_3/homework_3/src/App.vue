@@ -123,7 +123,7 @@
     import './main'
     import { Parser } from "./parser";
     import Vue from 'vue'
-    import jquery from 'jquery'
+    import 'jquery'
 
     let globalParser: Parser;
 
@@ -158,9 +158,12 @@
                     }
                     let json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/master/json_output/"
                     let json_url = json_link_header + start_year + "_" + (eval(start_year) + 1) + "_" + term_id + ".json";
-                    jquery.get(json_url, function(result: string){
-                        globalParser = Parser.constructor(result);
-                    });
+
+                    jQuery.get(json_url,
+                    function(data) {
+                        globalParser = new Parser(JSON.stringify(data));
+                        globalParser.printObject();
+                    }, 'text');
                 }
                 startQuery(year, term);
             },
@@ -182,7 +185,7 @@
                 this.checkValidation();
             },
             findClassroom(): void{
-                if (Parser.)
+
             },
             switchPart(part: string): void {
                 // alert("called switchpart");

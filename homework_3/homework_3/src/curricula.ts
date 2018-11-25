@@ -2,6 +2,7 @@
 
 import * as ts from "typescript/lib/tsserverlibrary";
 import emptyArray = ts.server.emptyArray;
+import {JsonObject, JsonProperty} from "json2typescript";
 
 class Info {
 
@@ -60,54 +61,70 @@ class Arrangement {
     }
 }
 
+@JsonObject("Curriculum")
+export class Curriculum {
 
-class Curriculum {
-
+    @JsonProperty("odd_week", [Arrangement])
     odd_week: Arrangement[] = [];
     // 单周的行课安排
 
+    @JsonProperty("even_week", [Arrangement])
     even_week: Arrangement[] = [];
     // 霜周的行课安排
 
+    @JsonProperty("holder_school", String)
     holder_school = '';
     // 开课院系
 
+    @JsonProperty("teacher_name", String)
     teacher_name = '';
     // 教师名称
 
+    @JsonProperty("teacher_title", String)
     teacher_title = '';
     // 教师职称
 
+    @JsonProperty("title_name", String)
     title_name = '';
     // 课程名称
 
+    @JsonProperty("identifier", String)
     identifier = '';
     // 课程唯一识别代码
 
+    @JsonProperty("learn_hour", Number)
     learn_hour = 0;
     // 学时
 
+    @JsonProperty("credit_score", Number)
     credit_score = 0.0;
     // 学分
 
+    @JsonProperty("start_week", Number)
     start_week = 0;
     // 起始周数
 
+    @JsonProperty("end_week", Number)
     end_week = 0;
     // 终止周数
 
+    @JsonProperty("notes", String)
     notes = '';
     // 备注
 
+    @JsonProperty("target_grade", Number)
     target_grade = 0;
     // 目标年级
 
+    @JsonProperty("school_year", Number)
     school_year = 0;
     // 学年
 
+    @JsonProperty("term", Number)
     term = 0;
     // 学期
 
+    @JsonProperty("student_number", Number)
     student_number = 0;
 
     // 上课人数
