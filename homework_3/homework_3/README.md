@@ -2,6 +2,8 @@
 
 > Homework Project for SE-100.
 
+Go to [GitHub Mirror](https://yuxiqian.github.io/index.html)
+
 ## Features
 
 Query all classrooms in SJTU and figure out when they're occupied, when they're empty.
@@ -15,8 +17,6 @@ All data come from [yuxiqian/finda-studyroom](https://github.com/yuxiqian/finda-
 ![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/result.png)
 
 > Result Page
-
-[GitHub Mirror](https://yuxiqian.github.io/index.html)
 
 ## Build Setup
 
