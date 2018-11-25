@@ -15,9 +15,9 @@ export class Parser {
         // // this.itemCount = 0;
     }
 
-    printObject(): void {
-        alert(JSON.stringify(this.jsonObject));
-    }
+    // printObject(): void {
+    //     alert(JSON.stringify(this.jsonObject));
+    // }
 
     jsonObject: Object;
 
@@ -41,9 +41,6 @@ export class Parser {
         return result_array;
     }
 
-    checkValid(): boolean {
-        return this.jsonObject != undefined;
-    }
 
     getCourse(week: number, week_day: number, room: string): Info[] {
         console.log(week);
@@ -51,7 +48,13 @@ export class Parser {
         console.log(room);
         let resultCur: Info[] = [];
         for (let i = 0; i < 13; i++) {
-            resultCur.push(Object());
+            resultCur.push({
+                class_name: "空教室",
+                holding_school: "",
+                teacher_name: "",
+                teacher_title: "",
+                population: 0
+            });
         }
         if (this.jsonObject.hasOwnProperty('data')) {
             for (let cur of (this.jsonObject as Data)["data"]) {

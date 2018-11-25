@@ -1,8 +1,9 @@
 <template>
-  <div id="app">
+  <form id="app" novalidate @submit.stop.prevent="open">
     <img src="./assets/logo.png">
     <span class="md-display-3">Project 3</span>
     <span class="md-title">Curricula Querier</span>
+
     <md-layout :md-gutter="40">
       <md-layout md-flex-offset="30">
         <md-input-container>
@@ -37,11 +38,11 @@
           <md-layout md-flex="30">
           </md-layout>
       </md-layout>
-      <md-layout :md-gutter="40" v-bind:hidden=resultStyle>
+      <md-layout :md-gutter="40">
           <md-layout md-flex-offset="30">
               <md-input-container>
                   <label for="week">周数</label>
-                  <md-select name="week" id="week" v-model="week" v-on:change="checkRoom()">
+                  <md-select name="week"  v-bind:disabled=resultStyle id="week" v-model="week" v-on:change="checkRoom()">
                       <md-option v-for="week in weeks" :key="week" :value="week">
                           第 {{ week }} 周
                       </md-option>
@@ -51,7 +52,7 @@
           <md-layout>
               <md-input-container>
                   <label for="day">星期</label>
-                  <md-select name="day" id="day" v-model="day" v-on:change="checkRoom()">
+                  <md-select name="day" v-bind:disabled=resultStyle id="day" v-model="day" v-on:change="checkRoom()">
                       <md-option value=1>星期一</md-option>
                       <md-option value=2>星期二</md-option>
                       <md-option value=3>星期三</md-option>
@@ -63,11 +64,11 @@
           <md-layout md-flex="30">
           </md-layout>
       </md-layout>
-    <md-layout :md-gutter="40" v-bind:hidden=resultStyle>
+    <md-layout :md-gutter="40">
       <md-layout md-flex-offset="30">
         <md-input-container>
           <label for="building">教学楼</label>
-          <md-select name="building" id="building" v-on:change="findClassroom(); checkRoom()" v-model="building">
+          <md-select name="building" v-bind:disabled=resultStyle id="building" v-on:change="findClassroom(); checkRoom()" v-model="building">
             <md-option value="minhang-west" :disabled="true">闵行校区西区</md-option>
             <md-option value="上院">上院</md-option>
             <md-option value="中院">中院</md-option>
@@ -84,7 +85,7 @@
       <md-layout>
         <md-input-container>
           <label for="room">门牌号</label>
-          <md-select name="room" id="room" v-model="room" v-on:change="checkRoom()">
+          <md-select name="room"  v-bind:disabled=resultStyle id="room" v-model="room" v-on:change="checkRoom()">
               <md-option :value="classroom" v-for="classroom in rooms" :key="classroom">
                   {{ classroom }}
               </md-option>
@@ -94,16 +95,42 @@
       <md-layout md-flex="30">
       </md-layout>
     </md-layout>
-    <md-layout md-gutter="8" v-bind:hidden=resultStyle>
+    <md-layout md-gutter="8">
+        <md-layout md-align="center">
+        <md-table>
+            <md-table-header>
+                <md-table-row>
+                    <md-table-head md-sort-by="index" md-numeric>节数</md-table-head>
+                    <md-table-head md-sort-by="title">课名</md-table-head>
+                    <md-table-head md-sort-by="teacher">教师</md-table-head>
+                    <md-table-head md-sort-by="school">院系</md-table-head>
+                    <md-table-head md-sort-by="population" md-numeric>人数</md-table-head>
+                </md-table-row>
+            </md-table-header>
 
-      <md-layout md-flex="30"></md-layout>
+            <md-table-body>
+                <md-table-row v-for="inf in info" :key="index">
+                    <md-table-cell>{{ info.indexOf(inf) + 1 }}</md-table-cell>
+                    <md-table-cell>{{ inf.class_name }}</md-table-cell>
+                    <md-table-cell>{{ inf.teacher_name }}  {{ inf.teacher_title}}</md-table-cell>
+                    <md-table-cell>{{ inf.holding_school }}</md-table-cell>
+                    <md-table-cell>{{ inf.population }}</md-table-cell>
+                </md-table-row>
+            </md-table-body>
+        </md-table>
+        </md-layout>
     </md-layout>
     <md-bottom-bar md-shift>
       <md-bottom-bar-item v-on:click="switchPart('room')" md-icon="room">按教室</md-bottom-bar-item>
       <md-bottom-bar-item v-on:click="switchPart('teacher')" md-icon="teacher">按教师</md-bottom-bar-item>
       <md-bottom-bar-item v-on:click="switchPart('name')" md-icon="name" md-active>按课名</md-bottom-bar-item>
+
     </md-bottom-bar>
-  </div>
+      <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
+          <span>加载成功。</span>
+          <md-button class="md-accent" md-theme="light-blue" @click="$refs.snackbar.close()">嗯</md-button>
+      </md-snackbar>
+  </form>
 </template>
 
 <script lang="ts">
@@ -118,6 +145,9 @@
     export default Vue.extend({
         data: function() {
             return {
+                vertical: 'top',
+                horizontal: 'center',
+                duration: 4000,
                 'year': undefined,
                 'term': undefined,
                 'building': undefined,
@@ -127,12 +157,13 @@
                 'queryStyle': true,
                 'resultStyle': true,
                 'rooms': [],
-                'weeks': []
+                'weeks': [],
+                'info': []
             }
         },
 
         methods: {
-            clickQuery(start_year: string, term: string): void {
+            async clickQuery(start_year: string, term: string) {
 
                 let term_id = 0;
                 switch (term) {
@@ -149,15 +180,22 @@
                 let json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/master/json_output/"
                 let json_url = json_link_header + start_year + "_" + (eval(start_year) + 1) + "_" + term_id + ".json";
 
-                jQuery.get(json_url,
+                await jQuery.get(json_url,
                     function (data) {
                         globalParser = new Parser(JSON.stringify(data));
-                        globalParser.printObject();
+                        // globalParser.printObject();
                     }, 'json');
-                this.findClassroom();
-            },
 
+                await this.findClassroom();
+                await this.showSuccess();
+                this.$data.resultStyle = false;
+            },
+            showSuccess() {
+                let myThis: any = this;
+                myThis.$refs.snackbar.open();
+            },
             checkValidation(): void {
+                this.$data.resultStyle = true;
                 if ((this.$data['year'] != undefined) && (this.$data['term'] != undefined)) {
                     this.$data.queryStyle = false;
                     // alert("OK");
@@ -175,9 +213,13 @@
                 this.$data.day = undefined;
                 this.$data.weeks = [];
                 this.$data.rooms = [];
+                this.$data.info = [];
                 this.checkValidation();
             },
             findClassroom(): void {
+                if (globalParser == undefined) {
+                    return;
+                }
                 this.$data.rooms = globalParser.getClassroom(this.$data.building);
                 if (this.$data.rooms.length > 0) {
                     this.$data.room = this.$data.rooms[0];
@@ -216,7 +258,7 @@
                 if (this.$data.room == undefined) {
                     return
                 }
-                console.log(globalParser.getCourse(this.$data.week, this.$data.day, this.$data.room));
+                this.$data.info = globalParser.getCourse(this.$data.week, this.$data.day, this.$data.room);
             }
         }
     })
