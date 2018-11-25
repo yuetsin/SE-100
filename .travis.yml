@@ -1,0 +1,10 @@
+sudo: required
+language: node_js
+node_js:
+  - "iojs"
+  - "7"
+install:
+    - cd homework_3/homework_3
+    - npm install
+  script:
+    - npm test
