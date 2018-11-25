@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install vue vue-cli vue-material@^0.8.1 typescript ts-loader
+npm install vue vue-cli vue-material@^0.8.1 typescript ts-loader jest
 
 # serve with hot reload at localhost:8080
 npm run dev
