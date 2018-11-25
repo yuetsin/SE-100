@@ -27,40 +27,66 @@
       <md-layout md-flex="30">
       </md-layout>
     </md-layout>
-    <md-layout :md-gutter="40">
-      <md-layout md-flex-offset="35">
-        <md-button v-on:click="resetUI()" class="md-raised md-accent">重置</md-button>
+      <md-layout :md-gutter="40">
+          <md-layout md-flex-offset="35">
+              <md-button v-on:click="resetUI()" class="md-raised md-accent">重置</md-button>
+          </md-layout>
+          <md-layout>
+              <md-button  v-on:click="clickQuery(year, term)" class="md-raised md-primary" v-bind:disabled=queryStyle>查询</md-button>
+          </md-layout>
+          <md-layout md-flex="30">
+          </md-layout>
       </md-layout>
-      <md-layout>
-        <md-button  v-on:click="clickQuery(year, term)" class="md-raised md-primary" v-bind:disabled=queryStyle>查询</md-button>
+      <md-layout :md-gutter="40">
+          <md-layout md-flex-offset="30">
+              <md-input-container>
+                  <label for="week">周数</label>
+                  <md-select name="week" v-on:change="checkValidation()" id="week" v-model="year">
+                      <md-option v-for="week in weeks" :key="week">
+                          {{ week }}
+                      </md-option>
+                  </md-select>
+              </md-input-container>
+          </md-layout>
+          <md-layout>
+              <md-input-container>
+                  <label for="day">星期</label>
+                  <md-select name="day" v-on:change="checkValidation()" id="day" v-model="term">
+                      <md-option value="monday">星期一</md-option>
+                      <md-option value="tuesday">星期二</md-option>
+                      <md-option value="wednesday">星期三</md-option>
+                      <md-option value="thursday">星期四</md-option>
+                      <md-option value="friday">星期五</md-option>
+                  </md-select>
+              </md-input-container>
+          </md-layout>
+          <md-layout md-flex="30">
+          </md-layout>
       </md-layout>
-      <md-layout md-flex="30">
-      </md-layout>
-    </md-layout>
     <md-layout :md-gutter="40" v-bind:hidden=resultStyle>
       <md-layout md-flex-offset="30">
         <md-input-container>
           <label for="building">教学楼</label>
-          <md-select name="building" id="building" v-on:change="sortClassroom()" v-model="building">
+          <md-select name="building" id="building" v-on:change="findClassroom()" v-model="building">
             <md-option value="minhang-west" :disabled="true">闵行校区西区</md-option>
-            <md-option value="upper">上院</md-option>
-            <md-option value="middle">中院</md-option>
-            <md-option value="lower">下院</md-option>
+            <md-option value="上院">上院</md-option>
+            <md-option value="中院">中院</md-option>
+            <md-option value="下院">下院</md-option>
             <md-option value="minhang-east" :disabled="true">闵行校区东区</md-option>
-            <md-option value="east-upper">东上院</md-option>
-            <md-option value="east-middle">东中院</md-option>
-            <md-option value="east-lower">东下院</md-option>
+            <md-option value="东上院">东上院</md-option>
+            <md-option value="东中院">东中院</md-option>
+            <md-option value="东下院">东下院</md-option>
             <md-option value="xuhui" :disabled="true">徐汇校区</md-option>
-            <md-option value="number-one">教一楼</md-option>
+            <md-option value="教一楼">教一楼</md-option>
           </md-select>
         </md-input-container>
       </md-layout>
       <md-layout>
         <md-input-container>
-          <label for="room">room</label>
+          <label for="room">门牌号</label>
           <md-select name="room" id="room" v-model="room">
-              <md-option v-for="classroom in rooms">
-                  {{ classroom.id }}
+              <md-option :value="classroom" v-for="classroom in rooms" :key="classroom">
+                  {{ classroom }}
               </md-option>
           </md-select>
         </md-input-container>
@@ -134,9 +160,21 @@
                 'term': undefined,
                 'building': undefined,
                 'room': undefined,
+                'week': undefined,
+                'day': undefined,
                 'queryStyle': true,
                 'resultStyle': true,
-                'rooms': []
+                'weeks': []
+            }
+        },
+
+        computed: {
+            rooms: function() {
+                if (this.$data.building != undefined) {
+                    return globalParser.getClassroom(this.$data.building);
+                } else {
+                    return undefined;
+                }
             }
         },
 
@@ -163,7 +201,7 @@
                     function(data) {
                         globalParser = new Parser(JSON.stringify(data));
                         globalParser.printObject();
-                    }, 'text');
+                    }, 'json');
                 }
                 startQuery(year, term);
             },
@@ -184,8 +222,8 @@
                 this.$data.room = undefined;
                 this.checkValidation();
             },
-            findClassroom(): void{
-
+            findClassroom(): void {
+                globalParser.getClassroom(this.$data.building);
             },
             switchPart(part: string): void {
                 // alert("called switchpart");

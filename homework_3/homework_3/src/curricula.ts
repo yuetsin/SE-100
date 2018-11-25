@@ -2,7 +2,6 @@
 
 import * as ts from "typescript/lib/tsserverlibrary";
 import emptyArray = ts.server.emptyArray;
-import {JsonObject, JsonProperty} from "json2typescript";
 
 class Info {
 
@@ -61,112 +60,79 @@ class Arrangement {
     }
 }
 
-@JsonObject("Curriculum")
-export class Curriculum {
+export interface Curriculum {
 
-    @JsonProperty("odd_week", [Arrangement])
-    odd_week: Arrangement[] = [];
+    odd_week: Arrangement[];
     // 单周的行课安排
 
-    @JsonProperty("even_week", [Arrangement])
-    even_week: Arrangement[] = [];
+    even_week: Arrangement[];
     // 霜周的行课安排
 
-    @JsonProperty("holder_school", String)
-    holder_school = '';
+    holder_school: string;
     // 开课院系
 
-    @JsonProperty("teacher_name", String)
-    teacher_name = '';
+    teacher_name: string;
     // 教师名称
 
-    @JsonProperty("teacher_title", String)
-    teacher_title = '';
+    teacher_title: string;
     // 教师职称
 
-    @JsonProperty("title_name", String)
-    title_name = '';
+    title_name: string;
     // 课程名称
 
-    @JsonProperty("identifier", String)
-    identifier = '';
+    identifier: string;
     // 课程唯一识别代码
 
-    @JsonProperty("learn_hour", Number)
-    learn_hour = 0;
+    learn_hour: number;
     // 学时
 
-    @JsonProperty("credit_score", Number)
-    credit_score = 0.0;
+    credit_score: number;
     // 学分
 
-    @JsonProperty("start_week", Number)
-    start_week = 0;
+
+    start_week: number;
     // 起始周数
 
-    @JsonProperty("end_week", Number)
-    end_week = 0;
+
+    end_week: number;
     // 终止周数
 
-    @JsonProperty("notes", String)
-    notes = '';
+    notes: string;
     // 备注
 
-    @JsonProperty("target_grade", Number)
-    target_grade = 0;
+
+    target_grade: number;
     // 目标年级
 
-    @JsonProperty("school_year", Number)
-    school_year = 0;
+
+    school_year: number;
     // 学年
 
-    @JsonProperty("term", Number)
-    term = 0;
+
+    term: number;
     // 学期
 
-    @JsonProperty("student_number", Number)
-    student_number = 0;
+    student_number: number;
 
     // 上课人数
-
-    related_rooms() {
-        let classrooms: string[] = [];
-
-        for (let i of this.odd_week) {
-            if (!(i.classroom in classrooms)) {
-                classrooms.push(i.classroom)
-            }
-        }
-
-        for (let i of this.even_week) {
-            if (!(i.classroom in classrooms)) {
-                classrooms.push(i.classroom)
-            }
-        }
-
-        return classrooms;
-    }
-
-    print_me() {
-        let summary = "";
-        summary += (this.title_name);
-        summary += (this.teacher_name);
-        summary += (this.teacher_title);
-        summary += (this.holder_school);
-        summary += (this.identifier);
-        summary += (this.learn_hour);
-        summary += (this.credit_score);
-        for (let i of this.odd_week) {
-            i.print_me();
-        }
-        for (let i of this.even_week) {
-            i.print_me();
-        }
-        summary += (this.notes);
-        summary += (this.target_grade);
-        summary += (this.school_year);
-        summary += (this.term);
-        summary += (this.student_number);
-        alert(summary);
-    }
 }
+
+export function related_rooms(cur: Curriculum): string[] {
+    let classrooms: string[] = [];
+
+    for (let i of cur.odd_week) {
+        if (!(i.classroom in classrooms)) {
+            classrooms.push(i.classroom)
+        }
+    }
+
+    for (let i of cur.even_week) {
+        if (!(i.classroom in classrooms)) {
+            classrooms.push(i.classroom)
+        }
+    }
+
+    return classrooms;
+}
+
+
