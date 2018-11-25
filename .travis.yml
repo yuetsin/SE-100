@@ -4,6 +4,6 @@ node_js:
   - "7"
 install:
   - cd homework_3/homework_3
-  - npm install vue vue-router vuex vue-material
+  - npm install vue vue-cli vue-material@^0.8.1 typescript ts-loader
 script:
   - npm test
