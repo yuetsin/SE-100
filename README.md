@@ -15,7 +15,8 @@ Some temporary demo project file that doesn't make much sense and should be igno
 
 Contains the stuff related to homework 2: "The Native and the Web".
 
-* /homework_3
+* /homework_3 
+
+[![Build Status](https://travis-ci.com/yuxiqian/SE-100.svg?branch=master)](https://travis-ci.com/yuxiqian/SE-100)
 
 Contains the stuff related to homework 3.
-
