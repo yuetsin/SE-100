@@ -190,10 +190,6 @@
                         "MIT License<br>" +
                             "Copyright (c) 2017 Simon Zhang<br>" +
                         "<br>" +
-                        "<strong>vue-typescript-dpapp-demo</strong>" +
-                        "<br>MIT License<br>" +
-                        "Copyright (c) 2017 Simon Zhang<br>" +
-                        "<br>" +
                         "<strong>finda-studyroom</strong>" +
                         "<br>MIT License<br>" +
                         "Copyright (c) 2018 yuxiqian<br>" +
@@ -217,6 +213,11 @@
         methods: {
             async clickQuery(start_year: string, term: string) {
 
+                this.$data.building = undefined;
+                this.$data.room = undefined;
+                this.$data.day = undefined;
+                this.$data.week = undefined;
+                this.$data.info = [];
                 let term_id = 0;
                 switch (term) {
                     case 'autumn':
