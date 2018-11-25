@@ -100,11 +100,11 @@
         <md-table>
             <md-table-header>
                 <md-table-row>
-                    <md-table-head md-sort-by="index" md-numeric>节数</md-table-head>
-                    <md-table-head md-sort-by="title">课名</md-table-head>
-                    <md-table-head md-sort-by="teacher">教师</md-table-head>
-                    <md-table-head md-sort-by="school">院系</md-table-head>
-                    <md-table-head md-sort-by="population" md-numeric>人数</md-table-head>
+                    <md-table-head md-numeric>节数</md-table-head>
+                    <md-table-head>课名</md-table-head>
+                    <md-table-head>教师</md-table-head>
+                    <md-table-head>院系</md-table-head>
+                    <md-table-head md-numeric>人数</md-table-head>
                 </md-table-row>
             </md-table-header>
 
@@ -120,16 +120,35 @@
         </md-table>
         </md-layout>
     </md-layout>
-    <md-bottom-bar md-shift>
-      <md-bottom-bar-item v-on:click="switchPart('room')" md-icon="room">按教室</md-bottom-bar-item>
-      <md-bottom-bar-item v-on:click="switchPart('teacher')" md-icon="teacher">按教师</md-bottom-bar-item>
-      <md-bottom-bar-item v-on:click="switchPart('name')" md-icon="name" md-active>按课名</md-bottom-bar-item>
 
-    </md-bottom-bar>
+      <md-speed-dial md-mode="scale" class="md-fab-top-right">
+          <md-button class="md-fab" md-fab-trigger>
+              <md-icon md-icon-morph>close</md-icon>
+              <md-icon>menu</md-icon>
+          </md-button>
+
+          <md-button href="https://github.com/yuxiqian" class="md-fab md-mini md-clean">
+              <md-icon>code</md-icon>
+          </md-button>
+
+          <md-button v-on:click="openDialog('ackdialog')" class="md-fab md-mini md-clean">
+              <md-icon>more</md-icon>
+          </md-button>
+      </md-speed-dial>
+
       <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
           <span>加载成功。</span>
           <md-button class="md-accent" md-theme="light-blue" @click="$refs.snackbar.close()">嗯</md-button>
       </md-snackbar>
+
+      <md-dialog-alert
+          :md-title="ackdialog.title"
+          :md-content-html="ackdialog.contentHtml"
+          @open="onOpen"
+          @close="onClose"
+          ref="ackdialog">
+      </md-dialog-alert>
+
   </form>
 </template>
 
@@ -145,9 +164,42 @@
     export default Vue.extend({
         data: function() {
             return {
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'center',
                 duration: 4000,
+                ackdialog: {
+                    title: '第三方开源软件',
+                    contentHtml: '<strong>Vue.js</strong>' +
+                        '<br>The MIT License (MIT)<br>' +
+                        'Copyright (c) 2013-present, Yuxi (Evan) You<br>' +
+                        '<br>' +
+                        '<strong>vue-material</strong>' +
+                        '<br>The MIT License (MIT)<br>' +
+                            'Copyright (c) 2016 Marcos Moura<br>' +
+                        '<br>' +
+                        '<strong>Vuex</strong>' +
+                        '<br>The MIT License (MIT)<br>' +
+                        'Copyright (c) 2015-present, Evan You<br>' +
+                        '<br>' +
+                        '<strong>TypeScript</strong>' +
+                        "<br>Apache License<br>" +
+                        "Version 2.0, January 2004<br>" +
+                        "http://www.apache.org/licenses/ <br><br>" +
+                        "<strong>vue-typescript-dpapp-demo</strong>" +
+                        "<br>" +
+                        "MIT License<br>" +
+                            "Copyright (c) 2017 Simon Zhang<br>" +
+                        "<br>" +
+                        "<strong>vue-typescript-dpapp-demo</strong>" +
+                        "<br>MIT License<br>" +
+                        "Copyright (c) 2017 Simon Zhang<br>" +
+                        "<br>" +
+                        "<strong>finda-studyroom</strong>" +
+                        "<br>MIT License<br>" +
+                        "Copyright (c) 2018 yuxiqian<br>" +
+                        "<br>"
+                },
+
                 'year': undefined,
                 'term': undefined,
                 'building': undefined,
@@ -193,6 +245,14 @@
             showSuccess() {
                 let myThis: any = this;
                 myThis.$refs.snackbar.open();
+            },
+            openDialog(ref: string) {
+                let myThis: any = this;
+                myThis.$refs[ref].open();
+            },
+            closeDialog(ref: string) {
+                let myThis: any = this;
+                myThis.$refs[ref].close();
             },
             checkValidation(): void {
                 this.$data.resultStyle = true;

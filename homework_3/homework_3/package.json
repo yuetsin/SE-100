@@ -89,5 +89,18 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "ts",
+            "json",
+            // 告诉 Jest 处理 `*.vue` 文件
+            "vue"
+        ],
+        "transform": {
+            // 用 `vue-jest` 处理 `*.vue` 文件
+            ".*\\.(vue)$": "vue-jest"
+        }
+    }
 }

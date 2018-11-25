@@ -6,7 +6,7 @@
 
 ``` bash
 # install dependencies
-npm install vue vue-router vuex vue-material @types/jquery
+npm install vue vue-router vuex vue-material
 
 # serve with hot reload at localhost:8080
 npm run dev
