@@ -21,6 +21,13 @@ export class Parser {
 
     jsonObject: Object;
 
+    checkSuccess(): boolean {
+        if (this.jsonObject.hasOwnProperty('data')) {
+            return true;
+        }
+        return false;
+    }
+
     getClassroom(building: string): string[] {
         // console.log("!!!!!!! building  = " + building);
         let result_array: string[] = [];
@@ -39,6 +46,40 @@ export class Parser {
         }
         result_array.sort();
         return result_array;
+    }
+
+    parseClassRoom() {
+        if (this.jsonObject.hasOwnProperty('data')) {
+            for (let cur of (this.jsonObject as Data)["data"]) {
+
+                cur.holder_school = cur.holder_school.replace(/\((.+)\)/g, "");
+                // console.log(cur.holder_school);
+
+                for (let oddArr of (cur["odd_week"] as [Arrangement])) {
+                    let splitedArray = oddArr.classroom.split(/(\\([d]\\))/)
+                    if (splitedArray.length == 4) {
+                        oddArr.classroom = splitedArray[2].replace("教学一楼", "教一楼");
+                        // console.log(splitedArray);
+                        // alert("处理了教室名为" + oddArr.classroom);
+                    } else if (splitedArray.length == 3) {
+                        oddArr.classroom = splitedArray[0] + "校区"
+                    }
+
+                }
+
+                for (let evenArr of (cur["even_week"] as [Arrangement])) {
+                    let splitedArray = evenArr.classroom.split(/[(\\/)]/)
+                    if (splitedArray.length == 4) {
+                        evenArr.classroom = splitedArray[2].replace("教学一楼", "教一楼");
+                        // console.log(splitedArray);
+                        // alert("处理了教室名为" + evenArr.classroom);
+                    } else if (splitedArray.length == 3) {
+                        evenArr.classroom = splitedArray[0] + "校区"
+                    }
+
+                }
+            }
+        }
     }
 
 

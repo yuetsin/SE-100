@@ -4,7 +4,7 @@
     <span class="md-display-3">Project 3</span>
     <span class="md-title">Curricula Querier</span>
 
-    <md-layout :md-gutter="40">
+    <md-layout :md-gutter="40" >
       <md-layout md-flex-offset="30">
         <md-input-container>
           <label for="year">学年</label>
@@ -58,6 +58,8 @@
                       <md-option value=3>星期三</md-option>
                       <md-option value=4>星期四</md-option>
                       <md-option value=5>星期五</md-option>
+                      <md-option value=6>星期六</md-option>
+                      <md-option value=7>星期日</md-option>
                   </md-select>
               </md-input-container>
           </md-layout>
@@ -77,8 +79,21 @@
             <md-option value="东上院">东上院</md-option>
             <md-option value="东中院">东中院</md-option>
             <md-option value="东下院">东下院</md-option>
+              <md-option value="minhang-east" :disabled="true">更多闵行教学楼</md-option>
+              <md-option value="木兰楼">木兰楼</md-option>
+              <md-option value="陈瑞球">陈瑞球楼</md-option>
+              <md-option value="杨咏曼">杨咏曼楼</md-option>
             <md-option value="xuhui" :disabled="true">徐汇校区</md-option>
-            <md-option value="教一楼">教一楼</md-option>
+              <md-option value="新上院">新上院</md-option>
+              <md-option value="徐汇中院">徐汇中院</md-option>
+              <md-option value="教一楼">教一楼</md-option>
+              <md-option value="工程馆">工程馆</md-option>
+              <md-option value="Med-X">Med-X 研究院</md-option>
+              <md-option value="luwan" :disabled="true">卢湾校区</md-option>
+              <md-option value="东一楼">东一楼</md-option>
+              <md-option value="东二楼">东二楼</md-option>
+              <md-option value="西一楼">西一楼</md-option>
+              <md-option value="西二楼">西二楼</md-option>
           </md-select>
         </md-input-container>
       </md-layout>
@@ -137,7 +152,7 @@
       </md-speed-dial>
 
       <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
-          <span>加载成功。</span>
+          <span> {{ queryResult }}</span>
           <md-button class="md-accent" md-theme="light-blue" @click="$refs.snackbar.close()">嗯</md-button>
       </md-snackbar>
 
@@ -195,7 +210,7 @@
                         "Copyright (c) 2018 yuxiqian<br>" +
                         "<br>"
                 },
-
+                'queryResult': "加载失败。",
                 'year': undefined,
                 'term': undefined,
                 'building': undefined,
@@ -238,13 +253,27 @@
                         globalParser = new Parser(JSON.stringify(data));
                         // globalParser.printObject();
                     }, 'json');
-
+                await this.parseName();
                 await this.findClassroom();
                 await this.showSuccess();
                 this.$data.resultStyle = false;
             },
+            parseName() {
+                globalParser.parseClassRoom();
+            },
             showSuccess() {
                 let myThis: any = this;
+                if (globalParser.checkSuccess()) {
+                    this.$data.queryResult = "加载成功。";
+                    if (this.$data.term == "summer") {
+                        this.$data.week = 19;
+                    } else {
+                        this.$data.week = 1;
+                    }
+                    this.$data.day = '1';
+                } else {
+                    this.$data.queryResult = "加载失败。";
+                }
                 myThis.$refs.snackbar.open();
             },
             openDialog(ref: string) {
