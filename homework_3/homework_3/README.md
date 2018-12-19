@@ -1,5 +1,7 @@
 # Homework 3
 
+[![Build Status](https://travis-ci.com/yuxiqian/SE-100.svg?branch=master)](https://travis-ci.com/yuxiqian/SE-100)
+
 > Homework Project for SE-100.
 
 Go to [GitHub Mirror][1]
