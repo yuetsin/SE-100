@@ -6,6 +6,7 @@ interface Data {
     data: [Curriculum];
 }
 
+
 export class Parser {
 
     constructor(json: string) {
@@ -20,6 +21,13 @@ export class Parser {
     // }
 
     jsonObject: Object;
+
+    checkStamp(): boolean {
+        if (this.jsonObject.hasOwnProperty('generate_time')) {
+            return true
+        }
+        return false
+    }
 
     checkSuccess(): boolean {
         if (this.jsonObject.hasOwnProperty('data')) {
@@ -159,3 +167,4 @@ export class Parser {
     // curData: JSON;
     // itemCount: number;
 }
+

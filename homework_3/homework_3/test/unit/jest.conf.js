@@ -4,6 +4,7 @@ module.exports = {
   rootDir: path.resolve(__dirname, '../../'),
   moduleFileExtensions: [
     'js',
+      'ts',
     'json',
     'vue'
   ],

@@ -2,7 +2,7 @@
   <form id="app" novalidate @submit.stop.prevent="open">
     <img src="./assets/logo.png">
     <span class="md-display-3">Project 3</span>
-    <span class="md-title">Curricula Querier</span>
+    <span class="md-title">Classroom Querier</span>
 
     <md-layout :md-gutter="40" >
       <md-layout md-flex-offset="30">
@@ -18,7 +18,7 @@
       <md-layout>
         <md-input-container>
           <label for="term">学期</label>
-          <md-select name="term" v-on:change="checkValidation(); switchWeek(); checkRoom()" id="term" v-model="term">
+          <md-select name="term" v-on:change="checkValidation(); switchWeek(); checkRoom();" id="term" v-model="term">
             <md-option value="autumn">秋季学期</md-option>
             <md-option value="spring">春季学期</md-option>
             <md-option value="summer">夏季小学期</md-option>
@@ -27,7 +27,13 @@
       </md-layout>
       <md-layout md-flex="30">
       </md-layout>
+
     </md-layout>
+      <md-layout>
+          <md-layout md-align="center">
+              <md-checkbox id="use-beta-data" v-on:change="checkValidation()" name="use-beta-data" v-model="betaswitcher" class="md-primary">使用 “Beta” 版数据</md-checkbox>
+          </md-layout>
+      </md-layout>
       <md-layout :md-gutter="40">
           <md-layout md-flex-offset="35">
               <md-button v-on:click="resetUI()" class="md-raised md-accent">重置</md-button>
@@ -221,7 +227,8 @@
                 'resultStyle': true,
                 'rooms': [],
                 'weeks': [],
-                'info': []
+                'info': [],
+                'betaswitcher': false
             }
         },
 
@@ -245,7 +252,10 @@
                         term_id = 3;
                         break;
                 }
-                let json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/master/json_output/"
+                var json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/master/json_output/";
+                if (this.$data.betaswitcher) {
+                    json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/be-ta/json_output/";
+                }
                 let json_url = json_link_header + start_year + "_" + (eval(start_year) + 1) + "_" + term_id + ".json";
 
                 await jQuery.get(json_url,
