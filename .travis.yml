@@ -6,4 +6,4 @@ install:
   - cd homework_3/homework_3
   - npm install vue vue-cli vue-material@^0.8.1 typescript ts-loader jest
 script:
-  - npm test
+  - npm run unit
