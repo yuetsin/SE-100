@@ -20,3 +20,7 @@ Contains the stuff related to homework 2: "The Native and the Web".
 [![Build Status](https://travis-ci.com/yuxiqian/SE-100.svg?branch=master)](https://travis-ci.com/yuxiqian/SE-100)
 
 Contains the stuff related to homework 3.
+
+* /homework_4
+
+That's a group work and it should be located in [malloc(0)'s repository](https://github.com/malloc-0/SketchMind).
