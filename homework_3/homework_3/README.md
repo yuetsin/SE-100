@@ -2,19 +2,19 @@
 
 > Homework Project for SE-100.
 
-Go to [GitHub Mirror](https://yuxiqian.github.io/index.html)
+Go to [GitHub Mirror][1]
 
 ## Features
 
 Query all classrooms in SJTU and figure out when they're occupied, when they're empty.
 
-All data come from [yuxiqian/finda-studyroom](https://github.com/yuxiqian/finda-studyroom).
+All data come from [yuxiqian/finda-studyroom][2].
 
-![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/main.png)
+![][image-1]
 
 > Main Page
 
-![](https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/result.png)
+![][image-2]
 
 > Result Page
 
@@ -40,7 +40,7 @@ npm run unit
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+For a detailed explanation on how things work, check out the [guide][3] and [docs for vue-loader][4].
 
 ## Technique Select
 
@@ -88,3 +88,69 @@ Thanks to many open-source library, it's as easy as JavaScript to use TypeScript
 ## Unit Test
 
 When we use vue-cli to initialize our projects, we would be asked if we want to use unit test (with Jest or Karma) in our project. Configuring them following the documents are just fine for TypeScript.
+
+I think it’s necessary to grab deeper into the unit test stuff, since I think it’s not a simple
+workload for me using Vue + TypeScript + Jest, which is a rare combination
+of technique stacks.
+
+First of all, I tried to solve it with both TypeScript + JavaScript,
+but soon I found it unacceptable to combine that two languages altogether.
+So I made some research and finally found a 'TypeScript' version of Jest.
+
+With that great help, I can easily create several files like "xxxx.spec.js".
+And thanks to Jest's simple syntax, I may write code like this:
+
+```javascript
+expect(Something.I.Want.to.Check).toBe(Like.Expected);
+```
+
+Nothing more than that 'expect' expression is necessary in the
+unit test!
+
+Plus, I created a file called 'samples.ts' to store all sample data
+and their expected results. In this way, the codes carrying different
+features won't be twisted altogether. 
+
+## Go with CI
+
+After completing the unit test, I can easily go further with the CI tools.
+There I picked one that I'm relatively familiar with: The 'Travis CI'.
+
+It has friendly website to manage all your repositories from GitHub, GitLab and more.
+All we need to do is configure a .travis.yml file like this:
+```yaml
+language: node_js
+# Specific the language
+
+node_js:
+  - "11.5.0"
+# Specific its version
+
+install:
+# Execute command to install dependencies
+  - cd homework_3/homework_3
+
+# From the package.json
+  - npm install
+
+script:
+# Finally execute the unit test with jest
+  - npm run unit
+```
+
+Done. That's all we need to do. After that, we may put that
+lovely tag onto our readme files:
+
+![][image-3]
+
+And it will dynamically update with every commit, so as executing
+unit tests to make sure everything is all right.
+
+[1]:	https://yuxiqian.github.io/index.html
+[2]:	https://github.com/yuxiqian/finda-studyroom
+[3]:	http://vuejs-templates.github.io/webpack/
+[4]:	http://vuejs.github.io/vue-loader
+
+[image-1]:	https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/main.png
+[image-2]:	https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/result.png
+[image-3]:  https://raw.githubusercontent.com/yuxiqian/SE-100/master/homework_3/homework_3/img/ci.png
