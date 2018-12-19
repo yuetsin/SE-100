@@ -1,9 +1,10 @@
 language: node_js
 node_js:
-  - "iojs"
   - "7"
+before_install:
+  - npm install -g npm
 install:
   - cd homework_3/homework_3
-  - npm install vue vue-cli vue-material@^0.8.1 typescript ts-loader jest
+  - npm install
 script:
   - npm run unit
