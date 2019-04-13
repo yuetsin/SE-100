@@ -31,7 +31,8 @@
     </md-layout>
       <md-layout>
           <md-layout md-align="center">
-              <md-checkbox id="use-beta-data" v-on:change="checkValidation()" name="use-beta-data" v-model="betaswitcher" class="md-primary">使用 “Beta” 版数据</md-checkbox>
+              <md-switch v-model="betaswitcher" v-on:change="checkValidation()" id="use-beta-data" name="use-beta-data">使用 “Beta” 版数据</md-switch>
+<!--              <md-checkbox id="use-beta-data" v-on:change="checkValidation()" name="use-beta-data" v-model="betaswitcher" class="md-primary">使用 “Beta” 版数据</md-checkbox>-->
           </md-layout>
       </md-layout>
       <md-layout :md-gutter="40">
