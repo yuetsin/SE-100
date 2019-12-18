@@ -9,9 +9,9 @@
         <md-input-container>
           <label for="year">学年</label>
           <md-select name="year" v-on:change="checkValidation(); checkRoom()" id="year" v-model="year">
-            <md-option value="2018">2018 - 2019</md-option>
-            <md-option value="2017">2017 - 2018</md-option>
-            <md-option value="2016">2016 - 2017</md-option>
+            <md-option :value="year" v-for="year in years" :key="year">
+                  {{ year }} - {{ year + 1}}
+              </md-option>
           </md-select>
         </md-input-container>
       </md-layout>
@@ -88,8 +88,8 @@
             <md-option value="东下院">东下院</md-option>
               <md-option value="minhang-east" :disabled="true">更多闵行教学楼</md-option>
               <md-option value="木兰楼">木兰楼</md-option>
-              <md-option value="陈瑞球">陈瑞球楼</md-option>
-              <md-option value="杨咏曼">杨咏曼楼</md-option>
+              <md-option value="陈瑞球楼">陈瑞球楼</md-option>
+              <md-option value="杨咏曼楼">杨咏曼楼</md-option>
             <md-option value="xuhui" :disabled="true">徐汇校区</md-option>
               <md-option value="新上院">新上院</md-option>
               <md-option value="徐汇中院">徐汇中院</md-option>
@@ -134,7 +134,7 @@
                 <md-table-row v-for="inf in info" :key="index">
                     <md-table-cell>{{ info.indexOf(inf) + 1 }}</md-table-cell>
                     <md-table-cell>{{ inf.class_name }}</md-table-cell>
-                    <md-table-cell>{{ inf.teacher_name }}  {{ inf.teacher_title}}</md-table-cell>
+                    <md-table-cell>{{ inf.teachers.join('、') }} </md-table-cell>
                     <md-table-cell>{{ inf.holding_school }}</md-table-cell>
                     <md-table-cell>{{ inf.population }}</md-table-cell>
                 </md-table-row>
@@ -181,6 +181,13 @@
     import Vue from 'vue'
     import 'jquery'
 
+    var date = new Date;
+    var currentYear = date.getFullYear();
+    var years: number[] = [currentYear];
+    for (var i = currentYear - 1; i >= 2018; --i) { 
+        years.push(i);
+    }
+
     let globalParser: Parser;
 
     export default Vue.extend({
@@ -212,9 +219,9 @@
                         "MIT License<br>" +
                             "Copyright (c) 2017 Simon Zhang<br>" +
                         "<br>" +
-                        "<strong>finda-studyroom</strong>" +
+                        "<strong>NG-Course</strong>" +
                         "<br>MIT License<br>" +
-                        "Copyright (c) 2018 yuxiqian<br>" +
+                        "Copyright (c) 2019 yuxiqian<br>" +
                         "<br>"
                 },
                 'queryResult': "加载失败。",
@@ -229,6 +236,7 @@
                 'rooms': [],
                 'weeks': [],
                 'info': [],
+                'years': years,
                 'betaswitcher': false
             }
         },
@@ -253,9 +261,9 @@
                         term_id = 3;
                         break;
                 }
-                var json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/master/json_output/";
+                var json_link_header = "https://raw.githubusercontent.com/yuetsin/ng-course/master/release/";
                 if (this.$data.betaswitcher) {
-                    json_link_header = "https://raw.githubusercontent.com/yuxiqian/finda-studyroom/be-ta/json_output/";
+                    json_link_header = "https://raw.githubusercontent.com/yuetsin/ng-course/be-ta/release/";
                 }
                 let json_url = json_link_header + start_year + "_" + (eval(start_year) + 1) + "_" + term_id + ".json";
 
@@ -276,11 +284,11 @@
                 let myThis: any = this;
                 if (globalParser.checkSuccess()) {
                     this.$data.queryResult = "加载成功。";
-                    if (this.$data.term == "summer") {
-                        this.$data.week = 19;
-                    } else {
-                        this.$data.week = 1;
-                    }
+                    // if (this.$data.term == "summer") {
+                    //     this.$data.week = 1;
+                    // } else {
+                    this.$data.week = 1;
+                    // }
                     this.$data.day = '1';
                 } else {
                     this.$data.queryResult = "加载失败。";
@@ -319,9 +327,31 @@
             },
             findClassroom(): void {
                 if (globalParser == undefined) {
-                    return;
+                    return
                 }
-                this.$data.rooms = globalParser.getClassroom(this.$data.building);
+                if (this.$data.building == undefined) {
+                    return
+                }
+                var campus: string = ""
+                for (let str of ["上院", "中院", "下院", "东上院", "东中院", "东下院", "木兰楼", "陈瑞球楼", "杨咏曼楼"]) {
+                    if (this.$data.building.startsWith(str)) {
+                        campus = "闵行"
+                    }
+                }
+
+                for (let str of ["新上院", "徐汇中院", "教一楼", "工程馆", "Med-X 研究院"]) {
+                    if (this.$data.building.startsWith(str)) {
+                        campus = "徐汇"
+                    }
+                }
+
+                for (let str of ["东一楼", "东二楼", "西一楼", "西二楼"]) {
+                    if (this.$data.building.startsWith(str)) {
+                        campus = "卢湾"
+                    }
+                }
+
+                this.$data.rooms = globalParser.getClassroom(campus, this.$data.building);
                 if (this.$data.rooms.length > 0) {
                     this.$data.room = this.$data.rooms[0];
                 } else {
@@ -334,11 +364,11 @@
             switchWeek(): void {
                 this.$data.weeks = [];
                 if (this.$data.term == "summer") {
-                    for (let i = 19; i <= 22; i++) {
+                    for (let i = 1; i <= 6; i++) {
                         this.$data.weeks.push(i);
                     }
                 } else {
-                    for (let i = 1; i <= 16; i++) {
+                    for (let i = 1; i <= 18; i++) {
                         this.$data.weeks.push(i);
                     }
                 }
@@ -359,7 +389,28 @@
                 if (this.$data.room == undefined) {
                     return
                 }
-                this.$data.info = globalParser.getCourse(this.$data.week, this.$data.day, this.$data.room);
+                if (this.$data.building == undefined) {
+                    return
+                }
+                var campus: string = ""
+                for (let str of ["上院", "中院", "下院", "东上院", "东中院", "东下院", "木兰楼", "陈瑞球楼", "杨咏曼楼"]) {
+                    if (this.$data.building.startsWith(str)) {
+                        campus = "闵行"
+                    }
+                }
+
+                for (let str of ["新上院", "徐汇中院", "教一楼", "工程馆", "Med-X 研究院"]) {
+                    if (this.$data.building.startsWith(str)) {
+                        campus = "徐汇"
+                    }
+                }
+
+                for (let str of ["东一楼", "东二楼", "西一楼", "西二楼"]) {
+                    if (this.$data.building.startsWith(str)) {
+                        campus = "卢湾"
+                    }
+                }
+                this.$data.info = globalParser.getCourse(this.$data.week, this.$data.day, campus, this.$data.room);
             }
         }
     })

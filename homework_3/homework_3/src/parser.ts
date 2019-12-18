@@ -1,6 +1,6 @@
 // parser.ts
 
-import {Curriculum, Arrangement, Info, related_rooms} from "./curricula";
+import {Curriculum, Arrangement, Info, location, related_rooms} from "./curricula";
 
 interface Data {
     data: [Curriculum];
@@ -36,7 +36,7 @@ export class Parser {
         return false;
     }
 
-    getClassroom(building: string): string[] {
+    getClassroom(campus: string, building: string): string[] {
         // console.log("!!!!!!! building  = " + building);
         let result_array: string[] = [];
         if (this.jsonObject.hasOwnProperty('data')) {
@@ -44,9 +44,12 @@ export class Parser {
                 let rooms = related_rooms((cur as Curriculum));
                 // console.log(rooms);
                 for (let classroom of rooms) {
-                    if (classroom.startsWith(building)) {
-                        if (! result_array.includes(classroom)) {
-                            result_array.push(classroom);
+                    // console.log("entered for. comparing ", classroom[0], "and", campus)
+                    if (classroom[0] == campus) {
+                        if (classroom[1].startsWith(building)) {
+                            if (! result_array.includes(classroom[1])) {
+                                result_array.push(classroom[1]);
+                            }
                         }
                     }
                 }
@@ -57,41 +60,11 @@ export class Parser {
     }
 
     parseClassRoom() {
-        if (this.jsonObject.hasOwnProperty('data')) {
-            for (let cur of (this.jsonObject as Data)["data"]) {
-
-                cur.holder_school = cur.holder_school.replace(/\((.+)\)/g, "");
-                // console.log(cur.holder_school);
-
-                for (let oddArr of (cur["odd_week"] as [Arrangement])) {
-                    let splitedArray = oddArr.classroom.split(/(\\([d]\\))/)
-                    if (splitedArray.length == 4) {
-                        oddArr.classroom = splitedArray[2].replace("教学一楼", "教一楼");
-                        // console.log(splitedArray);
-                        // alert("处理了教室名为" + oddArr.classroom);
-                    } else if (splitedArray.length == 3) {
-                        oddArr.classroom = splitedArray[0] + "校区"
-                    }
-
-                }
-
-                for (let evenArr of (cur["even_week"] as [Arrangement])) {
-                    let splitedArray = evenArr.classroom.split(/[(\\/)]/)
-                    if (splitedArray.length == 4) {
-                        evenArr.classroom = splitedArray[2].replace("教学一楼", "教一楼");
-                        // console.log(splitedArray);
-                        // alert("处理了教室名为" + evenArr.classroom);
-                    } else if (splitedArray.length == 3) {
-                        evenArr.classroom = splitedArray[0] + "校区"
-                    }
-
-                }
-            }
-        }
+        // needless to parse that any more.
     }
 
 
-    getCourse(week: number, week_day: number, room: string): Info[] {
+    getCourse(week: number, week_day: number, campus: string, room: string): Info[] {
         console.log(week);
         console.log(week_day);
         console.log(room);
@@ -100,65 +73,48 @@ export class Parser {
             resultCur.push({
                 class_name: "空教室",
                 holding_school: "",
-                teacher_name: "",
-                teacher_title: "",
+                teachers: [],
                 population: 0
             });
         }
         if (this.jsonObject.hasOwnProperty('data')) {
             for (let cur of (this.jsonObject as Data)["data"]) {
-                // console.log("Hell!");
-                if (!related_rooms(cur).includes(room)) {
-                    continue;
-                }
-                if (cur.start_week > week) {
-                    continue;
-                }
-                if (cur.end_week < week) {
-                    continue;
+                let current: location = [campus, room]
+                // console.log("currently campus, room = ", campus, room);
+
+                var found = false
+                for (let item of related_rooms(cur)) {
+                    if (item[0] == campus && item[1] == room) {
+                        found = true
+                        break
+                    }
                 }
 
-                if (week % 2 == 1) {
-                    // console.log(cur);
-                    // 单周
-                    // console.log("Pass! A");
-                    for (let arr of (cur['odd_week'] as Arrangement[])) {
-                        // console.log("Here!");
-                        if (arr.week_day != week_day) {
-                            continue;
-                        }
-                        for (let i = arr['start_from']; i <= arr['end_at']; i++) {
-                            console.log('pa');
-                            let info = {
-                                class_name: cur.name,
-                                holding_school: cur.holder_school,
-                                teacher_name: cur.teacher,
-                                teacher_title: cur.teacher_title,
-                                population: cur.student_number
-                            };
-                            resultCur[i - 1] = info;
-                            // console.log(info);
-                        }
+                if (!found) {
+                    continue
+                }
+
+                for (let arr of (cur.arrangements as Arrangement[])) {
+                    // console.log("Here!");
+                    if (arr.week_day != week_day) {
+                        continue;
                     }
-                } else {
-                    // 霜周
-                    // console.log("Pass! B");
-                    for (let arr of (cur['even_week'] as Arrangement[])) {
-                        if (arr.week_day != week_day) {
-                            continue;
-                        }
-                        for (let i = arr.start_from; i <= arr.end_at; i++) {
-                            let info = {
-                                class_name: cur.name,
-                                holding_school: cur.holder_school,
-                                teacher_name: cur.teacher,
-                                teacher_title: cur.teacher_title,
-                                population: cur.student_number
-                            };
-                            resultCur[i - 1] = info;
-                        }
+                    if (! (week in arr.weeks)) {
+                        continue;
+                    }
+                    for (let i of arr.sessions) {
+                        // console.log('pa');
+                        let info = {
+                            class_name: cur.name,
+                            holding_school: cur.holder_school,
+                            teachers: cur.teacher,
+                            population: cur.student_number
+                        };
+                        resultCur[i - 1] = info;
+                        // console.log(info);
                     }
                 }
+                
             }
         }
         return resultCur;
