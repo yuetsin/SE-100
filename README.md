@@ -17,7 +17,7 @@ This repo contains all homeworks in SE-100. :)
 
 * /homework_3 
 
-[![Build Status](https://travis-ci.com/yuxiqian/SE-100.svg?branch=master)](https://travis-ci.com/yuxiqian/SE-100)
+[![Build Status](https://travis-ci.com/yuetsin/SE-100.svg?branch=master)](https://travis-ci.com/yuetsin/SE-100)
 
 > Contains the stuff related to homework 3.
 
